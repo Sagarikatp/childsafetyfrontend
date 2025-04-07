@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">student-tracking-app</string>
+    <string name="title_activity_main">student-tracking-app</string>
+    <string name="package_name">com.example.studenttracking</string>
+    <string name="custom_url_scheme">com.example.studenttracking</string>
+</resources>
