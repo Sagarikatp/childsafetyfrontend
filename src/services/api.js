@@ -1,12 +1,11 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3000/api/gps"; // Your Node.js server URL
+const API_BASE_URL = "https://childsafetybackend.onrender.com/api/gps"; // Your Node.js server URL
 
 // Fetch the latest GPS location
 export const getCurrentLocation = async () => {
   const response = await axios.get(API_BASE_URL);
-  const latestLocation = response.data[response.data.length - 1]; // Get the latest data
-  console.log(latestLocation);
+  const latestLocation = response.data[0]; // Get the latest data
   return latestLocation;
 };
 
