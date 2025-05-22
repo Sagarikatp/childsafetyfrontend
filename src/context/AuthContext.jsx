@@ -1,7 +1,7 @@
 // src/context/AuthContext.js
 
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 
 const AuthContext = createContext();
 
@@ -12,14 +12,18 @@ export function AuthProvider({ children }) {
   // On component mount, check if token exists
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
+
     if (storedToken) {
       setToken(storedToken);
 
+      // Attach token to axiosInstance for future requests
+      axiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${storedToken}`;
+
       // Optionally, verify the token or fetch user details
-      axios
-        .get("http://localhost:3000/api/auth/profile", {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        })
+      axiosInstance
+        .get("/auth/profile")
         .then((res) => {
           setUser(res.data.user); // Assuming your API returns { user: {...} }
         })
@@ -28,20 +32,27 @@ export function AuthProvider({ children }) {
           localStorage.removeItem("authToken");
           setToken(null);
           setUser(null);
+          delete axiosInstance.defaults.headers.common["Authorization"];
         });
     }
   }, []);
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/login", {
+      const res = await axiosInstance.post("/auth/login", {
         email,
         password,
       });
 
-      setUser({ email }); // You may want to use `res.data.user` if available
-      setToken(res.data.token);
-      localStorage.setItem("authToken", res.data.token);
+      const token = res.data.token;
+      setUser({ email }); // Or use res.data.user if available
+      setToken(token);
+      localStorage.setItem("authToken", token);
+
+      // Set the default Authorization header on axiosInstance
+      axiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token}`;
 
       return { success: true };
     } catch (error) {

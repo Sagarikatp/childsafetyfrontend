@@ -82,6 +82,19 @@ export default function Layout() {
               />
               <span className="text-xs mt-1">History</span>
             </NavLink>
+            <NavLink
+              to="/geofence"
+              className={`flex flex-col items-center py-2 px-4 ${
+                isActive("/geofence") ? "text-blue-600" : "text-gray-600"
+              }`}
+            >
+              <MapIcon
+                className={`h-6 w-6 ${
+                  isActive("/geofence") ? "text-blue-600" : "text-gray-600"
+                }`}
+              />
+              <span className="text-xs mt-1">Geofence View</span>
+            </NavLink>
           </div>
         </nav>
 
@@ -135,6 +148,21 @@ export default function Layout() {
                 }`}
               />
               <span className="font-medium">Location History</span>
+            </NavLink>
+            <NavLink
+              to="/geofence"
+              className={`flex items-center p-3 rounded-lg ${
+                isActive("/geofence")
+                  ? "bg-blue-100 text-blue-600"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <ClockIcon
+                className={`h-6 w-6 mr-3 ${
+                  isActive("/geofence") ? "text-blue-600" : "text-gray-600"
+                }`}
+              />
+              <span className="font-medium">Geofence View</span>
             </NavLink>
           </div>
         </nav>
