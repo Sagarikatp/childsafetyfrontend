@@ -1,5 +1,4 @@
 import { MapIcon } from "./Icons";
-
 export default function MapPlaceholder({ message, isError = false }) {
   return (
     <div className="flex flex-col items-center justify-center h-full bg-gray-100">
