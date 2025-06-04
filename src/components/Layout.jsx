@@ -150,6 +150,21 @@ export default function Layout() {
               <span className="font-medium">Location History</span>
             </NavLink>
             <NavLink
+              to="/setgeofence"
+              className={`flex items-center p-3 rounded-lg ${
+                isActive("/setgeofence")
+                  ? "bg-blue-100 text-blue-600"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <ClockIcon
+                className={`h-6 w-6 mr-3 ${
+                  isActive("/setgeofence") ? "text-blue-600" : "text-gray-600"
+                }`}
+              />
+              <span className="font-medium">SetGeofence</span>
+            </NavLink>
+            <NavLink
               to="/geofence"
               className={`flex items-center p-3 rounded-lg ${
                 isActive("/geofence")

@@ -36,6 +36,13 @@ export default function Home() {
             <ClockIcon className="h-12 w-12 mb-3" />
             <span className="text-lg font-medium">Geofence View</span>
           </button>
+          <button
+            onClick={() => navigate("/setgeofence")}
+            className="flex flex-col items-center justify-center bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-lg p-6 transition-colors"
+          >
+            <ClockIcon className="h-12 w-12 mb-3" />
+            <span className="text-lg font-medium">SetGeofence</span>
+          </button>
         </div>
 
         <p className="text-gray-600 text-center mt-8">
