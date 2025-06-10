@@ -12,6 +12,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import L from "leaflet";
+import axiosInstance from "../api/axiosInstance";
 
 // Fix Leaflet marker icon issue
 delete L.Icon.Default.prototype._getIconUrl;
@@ -41,7 +42,6 @@ export default function SetGeofence() {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async () => {
     setMessage(null);
     setError(null);
@@ -51,13 +51,18 @@ export default function SetGeofence() {
       return;
     }
 
+    const geoData = {
+      name: `Geofence @ ${center[0].toFixed(4)}, ${center[1].toFixed(4)}`,
+      center: {
+        type: "Point",
+        coordinates: [center[1], center[0]], // [lng, lat] format
+      },
+      radius,
+    };
+
     setLoading(true);
     try {
-      const response = await axios.post("/api/geofence", {
-        name: `Geofence @ ${center[0].toFixed(4)}, ${center[1].toFixed(4)}`,
-        center,
-        radius,
-      });
+      const response = await axiosInstance.post("/geofence/geofences", geoData);
 
       if (response.data.success) {
         setMessage("Geofence created successfully!");
