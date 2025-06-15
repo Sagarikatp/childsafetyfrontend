@@ -1,12 +1,22 @@
-import { Outlet, NavLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  NavLink,
+  useLocation,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import { MapIcon, ClockIcon, HomeIcon } from "./Icons";
 import PrivateRoute from "./PrivateRoute";
 import { useAuth } from "../context/AuthContext";
 
 export default function Layout() {
   const location = useLocation();
-  const { logout } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" />;
+  }
 
   const handleLogout = () => {
     logout();

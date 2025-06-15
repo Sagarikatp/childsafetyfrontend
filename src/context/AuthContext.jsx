@@ -22,18 +22,18 @@ export function AuthProvider({ children }) {
       ] = `Bearer ${storedToken}`;
 
       // Optionally, verify the token or fetch user details
-      axiosInstance
-        .get("/auth/profile")
-        .then((res) => {
-          setUser(res.data.user); // Assuming your API returns { user: {...} }
-        })
-        .catch((err) => {
-          console.error("Token validation failed:", err);
-          localStorage.removeItem("authToken");
-          setToken(null);
-          setUser(null);
-          delete axiosInstance.defaults.headers.common["Authorization"];
-        });
+      // axiosInstance
+      //   .get("/auth/profile")
+      //   .then((res) => {
+      //     setUser(res.data.user); // Assuming your API returns { user: {...} }
+      //   })
+      //   .catch((err) => {
+      //     console.error("Token validation failed:", err);
+      //     localStorage.removeItem("authToken");
+      //     setToken(null);
+      //     setUser(null);
+      //     delete axiosInstance.defaults.headers.common["Authorization"];
+      //   });
     }
   }, []);
 
@@ -73,8 +73,14 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("authToken");
   };
 
+  const isAuthenticated = () => {
+    return !!token;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, token, login, logout, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );
